@@ -1,3 +1,6 @@
 Making a game in C using raylib and sockets
 
+[+] Running server on a different thread
+[+] whenever server gets a req it updates the balls position
+
 Repo made using MPM
