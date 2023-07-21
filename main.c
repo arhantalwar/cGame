@@ -12,14 +12,11 @@
 
 #define PORT 8080
 #define MAX_CONNECTION 5
+#define width 1024
+#define height width / 2
 
-int ball_x = 0;
-
-void setX(int x) {
-    
-    ball_x = x;
-
-}
+int ball_x = width/2;
+int ball_y = height/2;
 
 typedef struct serverData {
     int serverSocket, clientSocket;
@@ -42,20 +39,31 @@ void* startServer(void* args) {
 
         server_data->clientSocket = accept(server_data->serverSocket, (struct sockaddr *)&server_data->serverAddress, &server_data->addrLen);
 
-        char * msg = "HELLO FROM SERVER";
-        send(server_data->clientSocket, msg, strlen(msg), 0);
+        
+        char readInput[2] = {0};
+        int bytesRead;
 
-        // Listen for player input and then move the ball
+        while((bytesRead = recv(server_data->clientSocket, readInput, sizeof(readInput) - 1, 0)) > 0) {
 
+            if(strcmp(readInput, "A") == 0) {
+                printf("[+] FROM CLIENT : %s\n", readInput);
+                ball_x -= 10;
+            }else if(strcmp(readInput, "S") == 0) {
+                printf("[+] FROM CLIENT : %s\n", readInput);
+                ball_y += 10;
+            }else if(strcmp(readInput, "D") == 0) {
+                printf("[+] FROM CLIENT : %s\n", readInput);
+                ball_x += 10;
+            }else if(strcmp(readInput, "W") == 0) {
+                printf("[+] FROM CLIENT : %s\n", readInput);
+                ball_y -= 10;
+            }
 
-        ball_x++;
-
+        }
 
         close(server_data->clientSocket);
 
-
     }
-    
 
     return NULL;
 }
@@ -95,8 +103,6 @@ int main() {
 
     //----------------------------------------------------raylib
 
-    int width = 1024;
-    int height = width / 2;
 
     InitWindow(width, height, "cGame");
     SetTargetFPS(60);
@@ -106,7 +112,7 @@ int main() {
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        DrawCircle(ball_x, ball_x, 50, MAGENTA);
+        DrawCircle(ball_x, ball_y, 50, MAGENTA);
 
         EndDrawing();
 

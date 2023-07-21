@@ -3,4 +3,7 @@ Making a game in C using raylib and sockets
 [+] Running server on a different thread
 [+] whenever server gets a req it updates the balls position
 
+[+] Player is able to update the balls position with a continous steam of data input
+
+
 Repo made using MPM
