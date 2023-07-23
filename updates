@@ -4,6 +4,12 @@ Making a game in C using raylib and sockets
 [+] whenever server gets a req it updates the balls position
 
 [+] Player is able to update the balls position with a continous steam of data input
+[+] Handling multiple clients on different threads
+
+--------------- [+] TODO
+
+1) Limit the client connection to only 2
+2) Manage the state after one of the client closes the connection
 
 
 Repo made using MPM
